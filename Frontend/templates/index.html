@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gulzar Trust Hospital - HMS</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="fas fa-hospital"></i> Gulzar Trust Hospital</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" style="display: none;">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 id="pageTitle"><i class="fas fa-hospital"></i> Gulzar Trust Hospital - HMS</h4>
+                <div>
+                    <span id="userRole" class="badge bg-secondary me-2"></span>
+                    <button class="btn btn-outline-primary btn-sm" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="overview">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#" class="nav-item admin-only" data-section="admin" style="display: none;">
+                    <i class="fas fa-user-shield"></i> Admin Panel
+                </a>
+                <a href="#" class="nav-item" data-section="patients">
+                    <i class="fas fa-user-injured"></i> Patients
+                </a>
+                <a href="#" class="nav-item" data-section="doctors">
+                    <i class="fas fa-user-md"></i> Doctors
+                </a>
+                <a href="#" class="nav-item" data-section="departments">
+                    <i class="fas fa-building"></i> Departments
+                </a>
+                <a href="#" class="nav-item" data-section="visits">
+                    <i class="fas fa-calendar-check"></i> Visits
+                </a>
+                <a href="#" class="nav-item" data-section="admissions">
+                    <i class="fas fa-bed"></i> Admissions
+                </a>
+                <a href="#" class="nav-item" data-section="wards">
+                    <i class="fas fa-hospital-alt"></i> Wards
+                </a>
+                <a href="#" class="nav-item" data-section="beds">
+                    <i class="fas fa-procedures"></i> Beds
+                </a>
+                <a href="#" class="nav-item" data-section="appointments">
+                    <i class="fas fa-calendar-alt"></i> Appointments
+                </a>
+                <a href="#" class="nav-item" data-section="billing">
+                    <i class="fas fa-file-invoice-dollar"></i> Billing
+                </a>
+                <a href="#" class="nav-item" data-section="pharmacy">
+                    <i class="fas fa-pills"></i> Pharmacy
+                </a>
+                <a href="#" class="nav-item" data-section="lab">
+                    <i class="fas fa-flask"></i> Laboratory
+                </a>
+                <a href="#" class="nav-item" data-section="reports">
+                    <i class="fas fa-chart-bar"></i> Reports
+                </a>
+                <a href="#" class="nav-item" data-section="inventory">
+                    <i class="fas fa-boxes"></i> Inventory
+                </a>
+                <a href="#" class="nav-item" data-section="staff">
+                    <i class="fas fa-users"></i> Staff
+                </a>
+                <a href="#" class="nav-item" data-section="emergency">
+                    <i class="fas fa-ambulance"></i> Emergency
+                </a>
+                <a href="#" class="nav-item" data-section="notifications">
+                    <i class="fas fa-bell"></i> Notifications
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Overview Section -->
+                <div id="overview-section" class="content-section active">
+                    <!-- Welcome Banner -->
+                    <div class="welcome-banner mb-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h2 class="mb-1">Welcome back, <span id="userName">User</span>!</h2>
+                                <p class="text-muted mb-0">Here's what's happening at Gulzar Trust Hospital today</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <div class="current-time">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="currentDateTime"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Stats Cards -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="stat-card bg-primary">
+                                <div class="stat-icon"><i class="fas fa-user-injured"></i></div>
+                                <div class="stat-info">
+                                    <h3 id="totalPatients">0</h3>
+                                    <p>Total Patients</p>
+                                    <small class="stat-change">+<span id="newPatientsToday">0</span> today</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card bg-success">
+                                <div class="stat-icon"><i class="fas fa-user-md"></i></div>
+                                <div class="stat-info">
+                                    <h3 id="totalDoctors">0</h3>
+                                    <p>Total Doctors</p>
+                                    <small class="stat-change"><span id="activeDoctors">0</span> active</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card bg-warning">
+                                <div class="stat-icon"><i class="fas fa-bed"></i></div>
+                                <div class="stat-info">
+                                    <h3 id="totalAdmissions">0</h3>
+                                    <p>Active Admissions</p>
+                                    <small class="stat-change"><span id="bedOccupancy">0</span>% occupancy</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card bg-info">
+                                <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                                <div class="stat-info">
+                                    <h3 id="totalVisits">0</h3>
+                                    <p>Today's Visits</p>
+                                    <small class="stat-change"><span id="pendingVisits">0</span> pending</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Stats Row -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="stat-card bg-danger">
+                                <div class="stat-icon"><i class="fas fa-ambulance"></i></div>
+                                <div class="stat-info">
+                                    <h3 id="emergencyCases">0</h3>
+                                    <p>Emergency Cases</p>
+                                    <small class="stat-change text-white">Active now</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card bg-secondary">
+                                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                                <div class="stat-info">
+                                    <h3 id="totalStaff">0</h3>
+                                    <p>Staff Members</p>
+                                    <small class="stat-change text-white">On duty</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card bg-dark">
+                                <div class="stat-icon"><i class="fas fa-boxes"></i></div>
+                                <div class="stat-info">
+                                    <h3 id="lowStockItems">0</h3>
+                                    <p>Low Stock Items</p>
+                                    <small class="stat-change text-white">Need attention</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card bg-purple">
+                                <div class="stat-icon"><i class="fas fa-bell"></i></div>
+                                <div class="stat-info">
+                                    <h3 id="pendingNotifications">0</h3>
+                                    <p>Notifications</p>
+                                    <small class="stat-change text-white">Unread</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts and Analytics -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-chart-line"></i> Patient Visits (Last 7 Days)</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="visitsChart" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-chart-pie"></i> Department Distribution</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="departmentChart" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-bolt"></i> Quick Actions</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <button class="btn btn-outline-primary w-100 mb-2"
+                                                onclick="showSection('patients')">
+                                                <i class="fas fa-user-plus"></i><br>Add Patient
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-outline-success w-100 mb-2"
+                                                onclick="showSection('appointments')">
+                                                <i class="fas fa-calendar-plus"></i><br>Schedule Appointment
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-outline-warning w-100 mb-2"
+                                                onclick="showSection('admissions')">
+                                                <i class="fas fa-bed"></i><br>Admit Patient
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-outline-info w-100 mb-2"
+                                                onclick="showSection('lab')">
+                                                <i class="fas fa-flask"></i><br>Lab Test
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-outline-secondary w-100 mb-2"
+                                                onclick="showSection('billing')">
+                                                <i class="fas fa-file-invoice"></i><br>Create Bill
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-outline-danger w-100 mb-2"
+                                                onclick="showSection('emergency')">
+                                                <i class="fas fa-ambulance"></i><br>Emergency
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activities -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-clock"></i> Recent Activities</h5>
+                                </div>
+                                <div class="card-body" id="recentActivities">
+                                    <!-- Recent activities will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-exclamation-triangle"></i> Alerts & Reminders</h5>
+                                </div>
+                                <div class="card-body" id="alertsReminders">
+                                    <!-- Alerts will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Panel Section -->
+                <div id="admin-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-user-shield"></i> Admin Panel</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                            <i class="fas fa-plus"></i> Add User
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-users"></i> User Management</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Department</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usersTableBody">
+                                        <!-- Users will be populated here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patients Section -->
+                <div id="patients-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-user-injured"></i> Patients Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#patientModal">
+                            <i class="fas fa-plus"></i> Add Patient
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>MRN</th>
+                                    <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Age</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="patientsTable">
+                                <!-- Patients will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Doctors Section -->
+                <div id="doctors-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-user-md"></i> Doctors Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#doctorModal">
+                            <i class="fas fa-plus"></i> Add Doctor
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Specialization</th>
+                                    <th>Department</th>
+                                    <th>Room No</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="doctorsTable">
+                                <!-- Doctors will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Departments Section -->
+                <div id="departments-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-building"></i> Departments Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#departmentModal">
+                            <i class="fas fa-plus"></i> Add Department
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Head</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="departmentsTable">
+                                <!-- Departments will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Appointments Section -->
+                <div id="appointments-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-calendar-alt"></i> Appointments Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#appointmentModal">
+                            <i class="fas fa-plus"></i> Add Appointment
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Doctor</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointmentsTable">
+                                <!-- Appointments will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Pharmacy Section -->
+                <div id="pharmacy-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-pills"></i> Pharmacy Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#medicineModal">
+                            <i class="fas fa-plus"></i> Add Medicine
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Stock</th>
+                                    <th>Price</th>
+                                    <th>Expiry Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pharmacyTable">
+                                <!-- Medicines will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Visits Section -->
+                <div id="visits-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-calendar-check"></i> Visits Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#visitModal">
+                            <i class="fas fa-plus"></i> Add Visit
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Doctor</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="visitsTable">
+                                <!-- Visits will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Admissions Section -->
+                <div id="admissions-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-bed"></i> Admissions Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#admissionModal">
+                            <i class="fas fa-plus"></i> Add Admission
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Ward</th>
+                                    <th>Bed</th>
+                                    <th>Admission Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admissionsTable">
+                                <!-- Admissions will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Wards Section -->
+                <div id="wards-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-hospital-alt"></i> Wards Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#wardModal">
+                            <i class="fas fa-plus"></i> Add Ward
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Total Beds</th>
+                                    <th>Available Beds</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="wardsTable">
+                                <!-- Wards will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Beds Section -->
+                <div id="beds-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-procedures"></i> Beds Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bedModal">
+                            <i class="fas fa-plus"></i> Add Bed
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Bed Number</th>
+                                    <th>Ward</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Patient</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bedsTable">
+                                <!-- Beds will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Billing Section -->
+                <div id="billing-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-file-invoice-dollar"></i> Billing Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#billModal">
+                            <i class="fas fa-plus"></i> Create Bill
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Bill ID</th>
+                                    <th>Patient</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="billingTable">
+                                <!-- Bills will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Laboratory Section -->
+                <div id="lab-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-flask"></i> Laboratory Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#labTestModal">
+                            <i class="fas fa-plus"></i> Add Lab Test
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Test ID</th>
+                                    <th>Patient</th>
+                                    <th>Test Type</th>
+                                    <th>Test Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="labTable">
+                                <!-- Lab tests will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Reports Section -->
+                <div id="reports-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-chart-bar"></i> Reports & Analytics</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-users"></i> Patient Reports</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <button class="btn btn-outline-primary" onclick="generatePatientReport()">
+                                        <i class="fas fa-file-alt"></i> Generate Patient Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-dollar-sign"></i> Revenue Reports</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <button class="btn btn-outline-success" onclick="generateRevenueReport()">
+                                        <i class="fas fa-chart-line"></i> Generate Revenue Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-user-md"></i> Doctor Reports</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <button class="btn btn-outline-info" onclick="generateDoctorReport()">
+                                        <i class="fas fa-stethoscope"></i> Generate Doctor Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-building"></i> Department Reports</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <button class="btn btn-outline-warning" onclick="generateDepartmentReport()">
+                                        <i class="fas fa-sitemap"></i> Generate Department Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inventory Section -->
+                <div id="inventory-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-boxes"></i> Inventory Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inventoryModal">
+                            <i class="fas fa-plus"></i> Add Item
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Item ID</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+                                    <th>Min Stock</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventoryTable">
+                                <!-- Inventory items will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Staff Section -->
+                <div id="staff-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-users"></i> Staff Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staffModal">
+                            <i class="fas fa-plus"></i> Add Staff
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Staff ID</th>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Department</th>
+                                    <th>Shift</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="staffTable">
+                                <!-- Staff will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Emergency Section -->
+                <div id="emergency-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-ambulance"></i> Emergency Management</h2>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#emergencyModal">
+                            <i class="fas fa-plus"></i> Add Emergency Case
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Case ID</th>
+                                    <th>Patient</th>
+                                    <th>Priority</th>
+                                    <th>Condition</th>
+                                    <th>Doctor</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="emergencyTable">
+                                <!-- Emergency cases will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Notifications Section -->
+                <div id="notifications-section" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-bell"></i> Notifications</h2>
+                        <button class="btn btn-primary" onclick="markAllRead()">
+                            <i class="fas fa-check-double"></i> Mark All Read
+                        </button>
+                    </div>
+
+                    <!-- Alerts -->
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="alert alert-warning" id="lowStockAlert" style="display: none;">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>Low Stock Alert!</strong> Some items are running low.
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="alert alert-danger" id="emergencyAlert" style="display: none;">
+                                <i class="fas fa-ambulance"></i>
+                                <strong>Active Emergencies!</strong> Immediate attention required.
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="alert alert-info" id="appointmentAlert" style="display: none;">
+                                <i class="fas fa-calendar"></i>
+                                <strong>Today's Appointments!</strong> Check scheduled appointments.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-list"></i> Recent Notifications</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="notificationsList">
+                                <!-- Notifications will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Role</label>
+                            <select class="form-control" name="role" required>
+                                <option value="">Select Role</option>
+                                <option value="admin">Admin</option>
+                                <option value="doctor">Doctor</option>
+                                <option value="nurse">Nurse</option>
+                                <option value="receptionist">Receptionist</option>
+                                <option value="pharmacist">Pharmacist</option>
+                                <option value="lab_tech">Lab Technician</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Department</label>
+                            <select class="form-control" name="department">
+                                <option value="">Select Department</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Permissions</label>
+                            <div id="permissionsContainer">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions" value="patients"
+                                        id="perm_patients">
+                                    <label class="form-check-label" for="perm_patients">Patients</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions" value="doctors"
+                                        id="perm_doctors">
+                                    <label class="form-check-label" for="perm_doctors">Doctors</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions"
+                                        value="departments" id="perm_departments">
+                                    <label class="form-check-label" for="perm_departments">Departments</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions" value="visits"
+                                        id="perm_visits">
+                                    <label class="form-check-label" for="perm_visits">Visits</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions"
+                                        value="admissions" id="perm_admissions">
+                                    <label class="form-check-label" for="perm_admissions">Admissions</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions" value="wards"
+                                        id="perm_wards">
+                                    <label class="form-check-label" for="perm_wards">Wards</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions" value="beds"
+                                        id="perm_beds">
+                                    <label class="form-check-label" for="perm_beds">Beds</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions"
+                                        value="appointments" id="perm_appointments">
+                                    <label class="form-check-label" for="perm_appointments">Appointments</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions" value="billing"
+                                        id="perm_billing">
+                                    <label class="form-check-label" for="perm_billing">Billing</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions" value="pharmacy"
+                                        id="perm_pharmacy">
+                                    <label class="form-check-label" for="perm_pharmacy">Pharmacy</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions" value="lab"
+                                        id="perm_lab">
+                                    <label class="form-check-label" for="perm_lab">Laboratory</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions" value="reports"
+                                        id="perm_reports">
+                                    <label class="form-check-label" for="perm_reports">Reports</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions" value="inventory"
+                                        id="perm_inventory">
+                                    <label class="form-check-label" for="perm_inventory">Inventory</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions" value="staff"
+                                        id="perm_staff">
+                                    <label class="form-check-label" for="perm_staff">Staff</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions" value="emergency"
+                                        id="perm_emergency">
+                                    <label class="form-check-label" for="perm_emergency">Emergency</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions" value="all"
+                                        id="perm_all">
+                                    <label class="form-check-label" for="perm_all"><strong>All
+                                            Permissions</strong></label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveUser()">Add User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Patient Modal -->
+    <div class="modal fade" id="patientModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-user-injured"></i> Add Patient</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="patientForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Gender</label>
+                            <select class="form-control" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Age</label>
+                            <input type="number" class="form-control" name="age" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" class="form-control" name="phone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea class="form-control" name="address" rows="3" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="savePatient()">Save Patient</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Doctor Modal -->
+    <div class="modal fade" id="doctorModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-user-md"></i> Add Doctor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="doctorForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Specialization</label>
+                            <input type="text" class="form-control" name="specialization" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Department</label>
+                            <select class="form-control" name="department" required>
+                                <option value="">Select Department</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Room No</label>
+                            <input type="text" class="form-control" name="roomNo" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveDoctor()">Save Doctor</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Department Modal -->
+    <div class="modal fade" id="departmentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-building"></i> Add Department</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="departmentForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="description" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Head</label>
+                            <input type="text" class="form-control" name="head" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveDepartment()">Save Department</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visit Modal -->
+    <div class="modal fade" id="visitModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-calendar-check"></i> Add Visit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="visitForm">
+                        <div class="mb-3">
+                            <label class="form-label">Patient Name</label>
+                            <input type="text" class="form-control" name="patient" required
+                                placeholder="Enter patient name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Doctor</label>
+                            <select class="form-control" name="doctor" required>
+                                <option value="">Select Doctor</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-control" name="date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Time</label>
+                            <input type="time" class="form-control" name="time" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-control" name="status" required>
+                                <option value="Scheduled">Scheduled</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveVisit()">Save Visit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admission Modal -->
+    <div class="modal fade" id="admissionModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-bed"></i> Add Admission</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="admissionForm">
+                        <div class="mb-3">
+                            <label class="form-label">Patient</label>
+                            <select class="form-control" name="patient" required>
+                                <option value="">Select Patient</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ward</label>
+                            <select class="form-control" name="ward" required>
+                                <option value="">Select Ward</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Bed</label>
+                            <select class="form-control" name="bed" required>
+                                <option value="">Select Bed</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Admission Date</label>
+                            <input type="date" class="form-control" name="admissionDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-control" name="status" required>
+                                <option value="Active">Active</option>
+                                <option value="Discharged">Discharged</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveAdmission()">Save Admission</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ward Modal -->
+    <div class="modal fade" id="wardModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-hospital-alt"></i> Add Ward</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="wardForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Type</label>
+                            <select class="form-control" name="type" required>
+                                <option value="">Select Type</option>
+                                <option value="General">General</option>
+                                <option value="ICU">ICU</option>
+                                <option value="Emergency">Emergency</option>
+                                <option value="Maternity">Maternity</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Total Beds</label>
+                            <input type="number" class="form-control" name="totalBeds" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveWard()">Save Ward</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bed Modal -->
+    <div class="modal fade" id="bedModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-procedures"></i> Add Bed</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="bedForm">
+                        <div class="mb-3">
+                            <label class="form-label">Bed Number</label>
+                            <input type="text" class="form-control" name="bedNumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ward</label>
+                            <select class="form-control" name="ward" required>
+                                <option value="">Select Ward</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Type</label>
+                            <select class="form-control" name="type" required>
+                                <option value="">Select Type</option>
+                                <option value="Standard">Standard</option>
+                                <option value="ICU">ICU</option>
+                                <option value="Emergency">Emergency</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-control" name="status" required>
+                                <option value="Available">Available</option>
+                                <option value="Occupied">Occupied</option>
+                                <option value="Maintenance">Maintenance</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveBed()">Save Bed</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bill Modal -->
+    <div class="modal fade" id="billModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-file-invoice-dollar"></i> Create Bill</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="billForm">
+                        <div class="mb-3">
+                            <label class="form-label">Patient</label>
+                            <select class="form-control" name="patient" required>
+                                <option value="">Select Patient</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Services</label>
+                            <div id="servicesContainer">
+                                <div class="row service-row">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" name="service[]"
+                                            placeholder="Service Name" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="number" class="form-control" name="amount[]" placeholder="Amount"
+                                            required onchange="calculateTotal()">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-success" onclick="addService()">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Total Amount</label>
+                            <input type="number" class="form-control" name="totalAmount" readonly>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveBill()">Create Bill</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Medicine Modal -->
+    <div class="modal fade" id="medicineModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-pills"></i> Add Medicine</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="medicineForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select class="form-control" name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="Tablet">Tablet</option>
+                                <option value="Capsule">Capsule</option>
+                                <option value="Syrup">Syrup</option>
+                                <option value="Injection">Injection</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Stock</label>
+                            <input type="number" class="form-control" name="stock" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price</label>
+                            <input type="number" step="0.01" class="form-control" name="price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Expiry Date</label>
+                            <input type="date" class="form-control" name="expiry" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveMedicine()">Save Medicine</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lab Test Modal -->
+    <div class="modal fade" id="labTestModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-flask"></i> Add Lab Test</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="labTestForm">
+                        <div class="mb-3">
+                            <label class="form-label">Patient</label>
+                            <select class="form-control" name="patient" required>
+                                <option value="">Select Patient</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Test Type</label>
+                            <select class="form-control" name="testType" required>
+                                <option value="">Select Test Type</option>
+                                <option value="Blood Test">Blood Test</option>
+                                <option value="Urine Test">Urine Test</option>
+                                <option value="X-Ray">X-Ray</option>
+                                <option value="CT Scan">CT Scan</option>
+                                <option value="MRI">MRI</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Test Date</label>
+                            <input type="date" class="form-control" name="testDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-control" name="status" required>
+                                <option value="Pending">Pending</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-control" name="notes" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveLabTest()">Save Lab Test</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inventory Modal -->
+    <div class="modal fade" id="inventoryModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-boxes"></i> Add Inventory Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="inventoryForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select class="form-control" name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="Medical Equipment">Medical Equipment</option>
+                                <option value="Consumables">Consumables</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="Electronics">Electronics</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Quantity</label>
+                            <input type="number" class="form-control" name="quantity" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Minimum Stock Level</label>
+                            <input type="number" class="form-control" name="minStock" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveInventoryItem()">Save Item</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Staff Modal -->
+    <div class="modal fade" id="staffModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-users"></i> Add Staff Member</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="staffForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Role</label>
+                            <select class="form-control" name="role" required>
+                                <option value="">Select Role</option>
+                                <option value="Nurse">Nurse</option>
+                                <option value="Technician">Technician</option>
+                                <option value="Pharmacist">Pharmacist</option>
+                                <option value="Receptionist">Receptionist</option>
+                                <option value="Cleaner">Cleaner</option>
+                                <option value="Security">Security</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Department</label>
+                            <select class="form-control" name="department" required>
+                                <option value="">Select Department</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Shift</label>
+                            <select class="form-control" name="shift" required>
+                                <option value="">Select Shift</option>
+                                <option value="Morning">Morning (6 AM - 2 PM)</option>
+                                <option value="Evening">Evening (2 PM - 10 PM)</option>
+                                <option value="Night">Night (10 PM - 6 AM)</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveStaff()">Save Staff</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div class="modal fade" id="emergencyModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fas fa-ambulance"></i> Add Emergency Case</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="emergencyForm">
+                        <div class="mb-3">
+                            <label class="form-label">Patient</label>
+                            <select class="form-control" name="patient" required>
+                                <option value="">Select Patient</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Priority</label>
+                            <select class="form-control" name="priority" required>
+                                <option value="">Select Priority</option>
+                                <option value="Critical">Critical</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Condition</label>
+                            <textarea class="form-control" name="condition" rows="3" required
+                                placeholder="Describe the emergency condition..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Assigned Doctor</label>
+                            <select class="form-control" name="doctor" required>
+                                <option value="">Select Doctor</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="saveEmergency()">Save Emergency Case</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/script.js"></script>
+</body>
+
+</html>
+<!-- Appointment Modal -->
+<div class="modal fade" id="appointmentModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-calendar-alt"></i> Add Appointment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="appointmentForm">
+                    <div class="mb-3">
+                        <label class="form-label">Patient Name</label>
+                        <input type="text" class="form-control" name="patient" required
+                            placeholder="Enter patient name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Doctor</label>
+                        <select class="form-control" name="doctor" required>
+                            <option value="">Select Doctor</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-control" name="date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Time</label>
+                        <input type="time" class="form-control" name="time" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Type</label>
+                        <select class="form-control" name="type" required>
+                            <option value="">Select Type</option>
+                            <option value="Consultation">Consultation</option>
+                            <option value="Follow-up">Follow-up</option>
+                            <option value="Emergency">Emergency</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-control" name="notes" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="saveAppointment()">Save Appointment</button>
+            </div>
+        </div>
+    </div>
+</div>

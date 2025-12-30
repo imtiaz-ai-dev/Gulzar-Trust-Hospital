@@ -1,0 +1,2111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gulzar Trust Hospital - Healthcare Excellence</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            color: #667eea !important;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            color: #333 !important;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #667eea !important;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="1000,100 1000,0 0,100"/></svg>');
+            background-size: cover;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .stats {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 3rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+        }
+        
+        .service-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            height: 100%;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-card h4 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 1.5rem;
+        }
+        
+        .feature-content h5 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .feature-content p {
+            color: #666;
+            margin: 0;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 50px 0 30px;
+        }
+        
+        .footer h5 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .footer p, .footer li {
+            color: #bdc3c7;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: white;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #34495e;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: #667eea;
+            transform: translateY(-3px);
+        }
+        
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            /* Features grid styles */
+            .feature-grid .feature-card {
+                background: white;
+                border-radius: 14px;
+                padding: 22px;
+                box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+                transition: all 0.35s ease;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .feature-card .icon {
+                width: 64px;
+                height: 64px;
+                border-radius: 15px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                font-size: 22px;
+                flex-shrink: 0;
+            }
+
+            .feature-card h5 { margin: 0 0 6px 0; font-size: 1.1rem; font-weight: 700; }
+            .feature-card p { color: #666; margin: 0 0 12px 0; flex: 1; }
+            .feature-card .card-actions { margin-top: 8px; }
+
+            .feature-card:hover { transform: translateY(-8px); box-shadow: 0 22px 50px rgba(0,0,0,0.15); }
+        }
+        
+        /* Hospital Logo */
+        .hospital-logo {
+            display: inline-flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 12px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        
+        .logo-main {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #667eea;
+        }
+        
+        .logo-sub {
+            font-size: 0.75rem;
+            color: #888;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        
+        /* Team Section */
+        .team {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .team-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            height: 100%;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .team-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 5px solid #667eea;
+        }
+        
+        .team-card h4 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .team-position {
+            color: #667eea;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .team-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Doctor Contact Styles */
+        .doctor-contact {
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        
+        .doctor-contact .btn {
+            font-size: 0.85rem;
+            padding: 8px 12px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .doctor-contact .btn-outline-primary {
+            border-color: #667eea;
+            color: #667eea;
+        }
+        
+        .doctor-contact .btn-outline-primary:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .doctor-contact .btn-outline-success {
+            border-color: #25d366;
+            color: #25d366;
+        }
+        
+        .doctor-contact .btn-outline-success:hover {
+            background: #25d366;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .doctor-contact .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+        }
+        
+        .doctor-contact .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .senior-doctor {
+            border: 2px solid #ffd700;
+        }
+        
+        .senior-doctor .team-img {
+            border-color: #ffd700;
+        }
+        
+        .senior-badge {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        
+        /* Advanced Features */
+        .hero-animation {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(-50%) translateX(0px); }
+            50% { transform: translateY(-50%) translateX(20px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.1); opacity: 0.4; }
+        }
+        
+        /* Particle Background */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: particleFloat 15s infinite linear;
+        }
+        
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4rem;
+            color: #667eea;
+            font-family: serif;
+        }
+        
+        .testimonial-text {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .testimonial-role {
+            color: #667eea;
+            font-size: 0.9rem;
+        }
+        
+        /* Awards Section */
+        .awards {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .award-item {
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .award-item:hover {
+            background: #f8f9fa;
+            transform: translateY(-5px);
+        }
+        
+        .award-icon {
+            font-size: 3rem;
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+        
+        .award-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .award-year {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Interactive Timeline */
+        .timeline {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            width: 45%;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 55%;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .timeline-date {
+            position: absolute;
+            top: 50%;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transform: translateY(-50%);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-date {
+            right: -85px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-date {
+            left: -85px;
+        }
+        
+        .advanced-stats {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .advanced-stats::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20" fill="rgba(255,255,255,0.05)"><circle cx="10" cy="10" r="2"/><circle cx="30" cy="10" r="2"/><circle cx="50" cy="10" r="2"/><circle cx="70" cy="10" r="2"/><circle cx="90" cy="10" r="2"/></svg>');
+            background-repeat: repeat;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .stat-desc {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        /* Technology Stack */
+        .tech-stack {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .tech-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .tech-item:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .tech-icon {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .tech-item h5 {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .tech-item p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        /* Additional responsive styles */
+        @media (max-width: 768px) {
+            .team-img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .logo-text {
+                display: none;
+            }
+            
+            .hospital-logo {
+                font-size: 1.2rem;
+            }
+            
+            /* Feature icon styles */
+            .icon.patient { background: linear-gradient(135deg,#667eea,#764ba2); }
+            .icon.appointment { background: linear-gradient(135deg,#20c997,#38f9d7); }
+            .icon.billing { background: linear-gradient(135deg,#ff6b6b,#feca57); }
+            .icon.pharmacy { background: linear-gradient(135deg,#6f42c1,#8e44ad); }
+            .icon.analytics { background: linear-gradient(135deg,#4facfe,#00f2fe); }
+            .icon.mobile { background: linear-gradient(135deg,#43e97b,#38f9d7); }
+        }
+        
+        /* Hero Stats Styles */
+        .hero-stat {
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 10px;
+        }
+        
+        .hero-stat .stat-number {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .hero-stat small {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.8rem;
+        }
+        
+        /* Health Tip Animation */
+        @keyframes tipFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .health-tip-card {
+            animation: tipFloat 4s ease-in-out infinite;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        /* Interactive Buttons */
+        .btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        /* Advanced Hover Effects */
+        .service-card, .team-card, .feature-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before, .team-card::before, .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+            opacity: 0;
+        }
+        
+        .service-card:hover::before, .team-card:hover::before, .feature-card:hover::before {
+            animation: shimmer 1.5s ease-in-out;
+            opacity: 1;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand hospital-logo" href="#home">
+                <div class="logo-icon">
+                    <i class="fas fa-hospital-alt"></i>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">Gulzar Trust</div>
+                    <div class="logo-sub">HOSPITAL MANAGEMENT</div>
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link btn" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link btn" onclick="document.getElementById('searchOverlay').style.display='flex'" title="Search (Ctrl+K)">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="index.html">
+                            <i class="fas fa-rocket"></i> HMS Portal
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="particles"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content fade-in">
+                        <h1>Healthcare Excellence Since 2023</h1>
+                        <p>Providing world-class medical care with compassion, innovation, and dedication to our community's health and wellbeing.</p>
+                        <div class="hero-stats mb-4">
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <div class="hero-stat">
+                                        <span class="stat-number">50K+</span>
+                                        <small>Patients</small>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="hero-stat">
+                                        <span class="stat-number">150+</span>
+                                        <small>Doctors</small>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="hero-stat">
+                                        <span class="stat-number">24/7</span>
+                                        <small>Emergency</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-buttons">
+                            <a href="index.html" class="btn btn-primary btn-lg me-3">
+                                <i class="fas fa-stethoscope"></i> Access HMS Portal
+                            </a>
+                            <a href="#about" class="btn btn-outline-light btn-lg">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                        <div class="hero-features mt-4">
+                            <div class="d-flex flex-wrap gap-3">
+                                <span class="badge bg-light text-dark px-3 py-2">
+                                    <i class="fas fa-shield-alt me-1"></i> ISO Certified
+                                </span>
+                                <span class="badge bg-light text-dark px-3 py-2">
+                                    <i class="fas fa-award me-1"></i> Award Winning
+                                </span>
+                                <span class="badge bg-light text-dark px-3 py-2">
+                                    <i class="fas fa-clock me-1"></i> 24/7 Available
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image fade-in">
+                        <div class="hero-animation">
+                            <i class="fas fa-hospital" style="font-size: 20rem;"></i>
+                        </div>
+                        <i class="fas fa-heartbeat" style="font-size: 8rem; opacity: 0.2; animation: pulse 2s infinite;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>About Gulzar Trust Hospital</h2>
+                <p>Committed to providing exceptional healthcare services with state-of-the-art technology and compassionate care.</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 fade-in">
+                    <h3>Our Mission</h3>
+                    <p>To provide comprehensive, high-quality healthcare services that improve the health and wellbeing of our community. We are committed to excellence in patient care, medical education, and research.</p>
+                    
+                    <h3>Our Vision</h3>
+                    <p>To be the leading healthcare provider in the region, recognized for our clinical excellence, innovative treatments, and compassionate care.</p>
+                    
+                    <h3>Our Values</h3>
+                    <ul>
+                        <li><strong>Compassion:</strong> We treat every patient with empathy and respect</li>
+                        <li><strong>Excellence:</strong> We strive for the highest standards in everything we do</li>
+                        <li><strong>Innovation:</strong> We embrace new technologies and treatments</li>
+                        <li><strong>Integrity:</strong> We maintain the highest ethical standards</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6 fade-in">
+                    <div class="stats">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <span class="stat-number">35+</span>
+                                    <div class="stat-label">Years of Service</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <span class="stat-number">200+</span>
+                                    <div class="stat-label">Hospital Beds</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <span class="stat-number">50+</span>
+                                    <div class="stat-label">Specialist Doctors</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <span class="stat-number">24/7</span>
+                                    <div class="stat-label">Emergency Care</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Statistics -->
+    <section class="advanced-stats">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-card fade-in">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-value">50,000+</div>
+                        <div class="stat-desc">Patients Served</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-card fade-in">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="stat-value">150+</div>
+                        <div class="stat-desc">Medical Staff</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-card fade-in">
+                        <div class="stat-icon">
+                            <i class="fas fa-procedures"></i>
+                        </div>
+                        <div class="stat-value">25,000+</div>
+                        <div class="stat-desc">Surgeries Completed</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-card fade-in">
+                        <div class="stat-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="stat-value">98%</div>
+                        <div class="stat-desc">Patient Satisfaction</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Our Medical Services</h2>
+                <p>Comprehensive healthcare services delivered by our team of experienced medical professionals.</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4 col-md-6 fade-in">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h4>Cardiology</h4>
+                        <p>Advanced cardiac care including diagnostics, interventional procedures, and cardiac surgery with state-of-the-art equipment.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 fade-in">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4>Neurology</h4>
+                        <p>Comprehensive neurological care for brain, spine, and nervous system disorders with cutting-edge treatment options.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 fade-in">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-bone"></i>
+                        </div>
+                        <h4>Orthopedics</h4>
+                        <p>Expert care for bone, joint, and muscle conditions including joint replacement and sports medicine.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 fade-in">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-ambulance"></i>
+                        </div>
+                        <h4>Emergency Care</h4>
+                        <p>24/7 emergency services with rapid response team and advanced life support capabilities.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 fade-in">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h4>Laboratory</h4>
+                        <p>Advanced diagnostic laboratory services with rapid turnaround times and accurate results.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 fade-in">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-x-ray"></i>
+                        </div>
+                        <h4>Radiology</h4>
+                        <p>Comprehensive imaging services including CT, MRI, ultrasound, and digital X-ray technology.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Our Medical Team</h2>
+                <p>Meet our experienced healthcare professionals dedicated to providing exceptional patient care.</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4 col-md-6 fade-in">
+                    <div class="team-card senior-doctor">
+                        <div class="senior-badge">Senior Consultant</div>
+                        <div class="specialty-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <img src="../images/docter2.png" alt="Dr. Muhammad Sulman" class="team-img">
+                        <h4>Dr. Muhammad Sulman</h4>
+                        <div class="team-position">Chief Cardiologist & Medical Director</div>
+                        <p>Senior cardiologist with over 15 years of experience in interventional cardiology and cardiac surgery. Leading our cardiovascular department with expertise in complex heart procedures.</p>
+                        <div class="doctor-contact mt-3">
+                            <a href="https://wa.me/923052643550" class="btn btn-outline-success btn-sm me-2" target="_blank">
+                                <i class="fas fa-comment-dots"></i> WhatsApp
+                            </a>
+                            <a href="mailto:aiwithsuleman@gmail.com" class="btn btn-outline-primary btn-sm me-2">
+                                <i class="fas fa-at"></i> Email
+                            </a>
+                            <a href="index.html" class="btn btn-primary btn-sm">
+                                <i class="fas fa-calendar-check"></i> Appointment
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 fade-in">
+                    <div class="team-card neurology">
+                        <div class="specialty-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <img src="../images/docter1.png" alt="Dr. Imtiaz Hussain" class="team-img">
+                        <h4>Dr. Imtiaz Hussain</h4>
+                        <div class="team-position">Neurologist & Emergency Medicine</div>
+                        <p>Experienced neurologist specializing in brain disorders, stroke treatment, and emergency neurology. Expert in neurological diagnostics and critical care management.</p>
+                        <div class="doctor-contact mt-3">
+                            <a href="https://wa.me/923006557250" class="btn btn-outline-success btn-sm me-2" target="_blank">
+                                <i class="fas fa-comment-dots"></i> WhatsApp
+                            </a>
+                            <a href="mailto:imtiazaistudent@gmail.com" class="btn btn-outline-primary btn-sm me-2">
+                                <i class="fas fa-at"></i> Email
+                            </a>
+                            <a href="index.html" class="btn btn-primary btn-sm">
+                                <i class="fas fa-calendar-check"></i> Appointment
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 fade-in">
+                    <div class="team-card orthopedics">
+                        <div class="specialty-icon">
+                            <i class="fas fa-bone"></i>
+                        </div>
+                        <img src="../images/docter3.png" alt="Dr. Faraz Hussain" class="team-img">
+                        <h4>Dr. Faraz Hussain</h4>
+                        <div class="team-position">Orthopedic Surgeon</div>
+                        <p>Dedicated orthopedic surgeon with expertise in joint replacement, sports medicine, and trauma surgery. Focused on delivering advanced orthopedic care with minimally invasive techniques.</p>
+                        <div class="doctor-contact mt-3">
+                            <a href="https://wa.me/923238889250" class="btn btn-outline-success btn-sm me-2" target="_blank">
+                                <i class="fas fa-comment-dots"></i> WhatsApp
+                            </a>
+                            <a href="mailto:aigeniusfaraz@gmail.com" class="btn btn-outline-primary btn-sm me-2">
+                                <i class="fas fa-at"></i> Email
+                            </a>
+                            <a href="index.html" class="btn btn-primary btn-sm">
+                                <i class="fas fa-calendar-check"></i> Appointment
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>What Our Patients Say</h2>
+                <p>Real experiences from patients who trust us with their healthcare needs.</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4 col-md-6 fade-in">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            The care I received at Gulzar Trust Hospital was exceptional. The staff was professional and the facilities are world-class.
+                        </div>
+                        <div class="testimonial-author">Sarah Ahmed</div>
+                        <div class="testimonial-role">Cardiac Patient</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 fade-in">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            Dr. Sulman's expertise in cardiology saved my life. The hospital's advanced technology is truly impressive.
+                        </div>
+                        <div class="testimonial-author">Ahmed Khan</div>
+                        <div class="testimonial-role">Heart Surgery Patient</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 fade-in">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            The HMS system made my appointments so easy to manage. Everything is digitized and efficient.
+                        </div>
+                        <div class="testimonial-author">Fatima Ali</div>
+                        <div class="testimonial-role">Regular Patient</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section class="awards">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Awards & Recognition</h2>
+                <p>Recognized for excellence in healthcare delivery and innovation.</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 fade-in">
+                    <div class="award-item">
+                        <div class="award-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="award-title">Best Hospital Award</div>
+                        <div class="award-year">2023</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 fade-in">
+                    <div class="award-item">
+                        <div class="award-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="award-title">Healthcare Innovation</div>
+                        <div class="award-year">2023</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 fade-in">
+                    <div class="award-item">
+                        <div class="award-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="award-title">Patient Safety Excellence</div>
+                        <div class="award-year">2022</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 fade-in">
+                    <div class="award-item">
+                        <div class="award-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div class="award-title">Digital Health Leader</div>
+                        <div class="award-year">2022</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Our Journey</h2>
+                <p>Milestones in our commitment to healthcare excellence.</p>
+            </div>
+            
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h4>Hospital Foundation</h4>
+                        <p>Gulzar Trust Hospital was established with a vision to provide world-class healthcare services.</p>
+                    </div>
+                    <div class="timeline-date">2023</div>
+                </div>
+                
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h4>HMS Implementation</h4>
+                        <p>Launched our advanced Hospital Management System for seamless patient care coordination.</p>
+                    </div>
+                    <div class="timeline-date">2023</div>
+                </div>
+                
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h4>Specialist Team</h4>
+                        <p>Assembled our expert medical team with specialists in cardiology, neurology, and orthopedics.</p>
+                    </div>
+                    <div class="timeline-date">2023</div>
+                </div>
+                
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h4>Future Expansion</h4>
+                        <p>Planning to expand services with new departments and advanced medical technologies.</p>
+                    </div>
+                    <div class="timeline-date">2024</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="tech-stack">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Advanced Technology Stack</h2>
+                <p>Built with cutting-edge technologies for optimal performance and reliability.</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="tech-item fade-in">
+                        <div class="tech-icon">
+                            <i class="fab fa-html5"></i>
+                        </div>
+                        <h5>Frontend</h5>
+                        <p>HTML5, CSS3, Bootstrap 5, JavaScript ES6+</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="tech-item fade-in">
+                        <div class="tech-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h5>Data Storage</h5>
+                        <p>Local Storage, Session Management, JSON</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="tech-item fade-in">
+                        <div class="tech-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h5>Responsive</h5>
+                        <p>Mobile-First Design, Cross-Platform</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="tech-item fade-in">
+                        <div class="tech-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h5>Security</h5>
+                        <p>Data Encryption, Secure Authentication</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Hospital Management System</h2>
+                <p>Advanced digital platform for seamless healthcare management and patient care coordination.</p>
+            </div>
+
+            <div class="feature-grid row g-4 mt-4">
+                <div class="col-12 col-md-6 col-lg-4 fade-in">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-start">
+                                            <div class="icon patient">
+                                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" fill="currentColor"/>
+                                                    <path d="M4 20c0-3.31 2.69-6 6-6h4c3.31 0 6 2.69 6 6v1H4v-1z" fill="currentColor"/>
+                                                </svg>
+                                            </div>
+                            <div class="ms-3">
+                                <h5>Patient Management</h5>
+                                <p>Comprehensive patient registration, medical records, and care coordination system.</p>
+                                <div class="card-actions"><a href="index.html" class="btn btn-sm btn-outline-primary">Open Module</a></div>
+                            </div>
+                                    </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 fade-in">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-start">
+                            <div class="icon appointment">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <path d="M16 2v4M8 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    <path d="M7 11h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="ms-3">
+                                <h5>Appointment Scheduling</h5>
+                                <p>Online appointment booking with doctor availability and automated confirmations.</p>
+                                <div class="card-actions"><a href="index.html" class="btn btn-sm btn-outline-primary">Book Now</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 fade-in">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-start">
+                            <div class="icon billing">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path d="M4 7h10v13H4z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <path d="M14 7l3 3v10" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <path d="M7 11h6M7 14h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="ms-3">
+                                <h5>Billing & Insurance</h5>
+                                <p>Integrated billing system with insurance processing and payment tracking.</p>
+                                <div class="card-actions"><a href="index.html" class="btn btn-sm btn-outline-primary">View Billing</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 fade-in">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-start">
+                            <div class="icon pharmacy">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path d="M21 7l-9 9M3 21l9-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    <path d="M14 3l7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="ms-3">
+                                <h5>Pharmacy Management</h5>
+                                <p>Digital prescription management with inventory tracking and drug interaction alerts.</p>
+                                <div class="card-actions"><a href="index.html" class="btn btn-sm btn-outline-primary">Open Pharmacy</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 fade-in">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-start">
+                            <div class="icon analytics">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <rect x="3" y="3" width="4" height="18" rx="1" fill="currentColor"/>
+                                    <rect x="9" y="9" width="4" height="12" rx="1" fill="currentColor"/>
+                                    <rect x="15" y="5" width="4" height="16" rx="1" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="ms-3">
+                                <h5>Analytics & Reports</h5>
+                                <p>Real-time dashboards and comprehensive reporting for operational insights.</p>
+                                <div class="card-actions"><a href="index.html" class="btn btn-sm btn-outline-primary">View Reports</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 fade-in">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-start">
+                            <div class="icon mobile">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <rect x="7" y="2" width="10" height="20" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <circle cx="12" cy="18" r="0.8" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="ms-3">
+                                <h5>Mobile Access</h5>
+                                <p>Responsive design for access from any device, anywhere, anytime.</p>
+                                <div class="card-actions"><a href="index.html" class="btn btn-sm btn-outline-primary">Try Mobile</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="fade-in">
+                <h2>Experience Our Advanced HMS Portal</h2>
+                <p>Access our comprehensive hospital management system and experience the future of healthcare administration.</p>
+                <a href="index.html" class="btn btn-light btn-lg">
+                    <i class="fas fa-rocket"></i> Launch HMS Portal
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="hospital-logo mb-3">
+                        <div class="logo-icon">
+                            <i class="fas fa-hospital-alt"></i>
+                        </div>
+                        <div class="logo-text">
+                            <div class="logo-main" style="color: white;">Gulzar Trust</div>
+                            <div class="logo-sub">HOSPITAL MANAGEMENT</div>
+                        </div>
+                    </div>
+                    <p>Providing exceptional healthcare services since 2023. Your health is our priority.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Contact Information</h5>
+                    <p><i class="fas fa-map-marker-alt"></i> Abbaspur Road Faisabalad Punjab Pakistan</p>
+                    <p><i class="fas fa-phone"></i> +92 300 6557250</p>
+                    <p><i class="fas fa-envelope"></i> gulzartrust.com</p>
+                    <p><i class="fas fa-clock"></i> 24/7 Emergency Services</p>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Medical Services</a></li>
+                        <li><a href="index.html">HMS Portal</a></li>
+                        <li><a href="#">Patient Portal</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr style="border-color: #34495e; margin: 2rem 0 1rem;">
+            <div class="text-center">
+                <p>&copy; 2025 Gulzar Trust Hospital | Designed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for better healthcare.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+
+    <!-- Chatbot UI -->
+    <div class="chatbot-container">
+        <button class="chatbot-toggle" onclick="toggleChatbot()" aria-label="Open chat">
+            <i class="fas fa-comments"></i>
+        </button>
+
+        <div class="chatbot-window" id="chatbotWindow" style="display:none;">
+            <div class="chatbot-header" role="banner">
+                <i class="fas fa-robot me-2" aria-hidden="true"></i>
+                <span>Healthcare Assistant</span>
+                <div style="position:absolute; right:12px; top:8px; display:flex; gap:6px;">
+                    <button class="btn btn-sm btn-outline-light" onclick="setGroqKey()" title="Set GROQ API Key" aria-label="Set API Key">
+                        <i class="fas fa-key"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-light" onclick="toggleChatbot()" aria-label="Close chat">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot"><i class="fas fa-robot me-2"></i>Hello! How can I help you today?</div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator" style="display:none;">
+                <div class="typing-dots"><span></span><span></span><span></span></div>
+            </div>
+
+            <div class="chatbot-input">
+                <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .chatbot-container { position: fixed; bottom: 24px; right: 24px; z-index: 1100; }
+        .chatbot-toggle { width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; border:none; box-shadow:0 8px 30px rgba(0,0,0,0.2); cursor:pointer; }
+        .chatbot-window { width:360px; height:480px; background:#fff; border-radius:14px; box-shadow:0 20px 60px rgba(0,0,0,0.2); display:flex; flex-direction:column; overflow:hidden; }
+        .chatbot-header { background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; padding:14px; font-weight:600; display:flex; align-items:center; justify-content:center; position:relative; }
+        .chatbot-messages { flex:1; padding:12px; overflow-y:auto; background:#f8f9fa; }
+        .message small.timestamp { display:block; margin-top:6px; font-size:11px; color:#888; }
+        .message { margin-bottom:12px; padding:10px 14px; border-radius:16px; max-width:78%; }
+        .message.user { margin-left:auto; background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; }
+        .message.bot { background:#fff; border:1px solid #e6e6e6; color:#333; }
+        .chatbot-input { display:flex; gap:8px; padding:12px; border-top:1px solid #eee; background:#fff; }
+        .chatbot-input input { flex:1; padding:10px 14px; border-radius:22px; border:1px solid #ddd; outline:none; }
+        .chatbot-input button { background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; border:none; padding:8px 12px; border-radius:22px; }
+        .typing-indicator { padding:10px 14px; }
+        .typing-dots { display:flex; gap:6px; }
+        .typing-dots span { width:8px; height:8px; border-radius:50%; background:#667eea; animation:typing 1.2s infinite; }
+        @keyframes typing { 0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)} }
+        @media (max-width:480px){ .chatbot-window{ width:320px; height:420px } }
+    </style>
+
+    <script>
+        // Advanced Chatbot System
+        let groqApiKey = localStorage.getItem('groqApiKey') || '';
+        
+        function toggleChatbot() {
+            const window = document.getElementById('chatbotWindow');
+            window.style.display = window.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        function setGroqKey() {
+            const key = prompt('Enter your GROQ API Key:');
+            if (key) {
+                groqApiKey = key;
+                localStorage.setItem('groqApiKey', key);
+                alert('API Key saved successfully!');
+            }
+        }
+        
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') sendMessage();
+        }
+        
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            addMessage(message, 'user');
+            input.value = '';
+            showTyping();
+            
+            try {
+                const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${groqApiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'llama3-8b-8192',
+                        messages: [{
+                            role: 'system',
+                            content: 'You are a helpful healthcare assistant for Gulzar Trust Hospital. Provide medical information, appointment guidance, and hospital services info.'
+                        }, {
+                            role: 'user',
+                            content: message
+                        }],
+                        max_tokens: 500
+                    })
+                });
+                
+                const data = await response.json();
+                hideTyping();
+                
+                if (data.choices && data.choices[0]) {
+                    addMessage(data.choices[0].message.content, 'bot');
+                } else {
+                    addMessage('Sorry, I\'m having trouble responding. Please try again.', 'bot');
+                }
+            } catch (error) {
+                hideTyping();
+                addMessage('Please set your GROQ API key first using the key button.', 'bot');
+            }
+        }
+        
+        function addMessage(text, sender) {
+            const messages = document.getElementById('chatbotMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.innerHTML = sender === 'bot' ? `<i class="fas fa-robot me-2"></i>${text}` : text;
+            messageDiv.innerHTML += `<small class="timestamp">${new Date().toLocaleTimeString()}</small>`;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+        
+        function showTyping() {
+            document.getElementById('typingIndicator').style.display = 'block';
+        }
+        
+        function hideTyping() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+        
+        // Particle System
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Initialize particles
+        createParticles();
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Advanced Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Add stagger effect for timeline items
+                    if (entry.target.classList.contains('timeline-item')) {
+                        const index = Array.from(entry.target.parentNode.children).indexOf(entry.target);
+                        entry.target.style.transitionDelay = (index * 0.2) + 's';
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Dynamic navbar background
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            const scrolled = window.scrollY;
+            
+            if (scrolled > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.backdropFilter = 'blur(20px)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.backdropFilter = 'blur(10px)';
+            }
+        });
+
+        // Enhanced counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent);
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target + (counter.textContent.includes('+') ? '+' : '');
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + (counter.textContent.includes('+') ? '+' : '');
+                    }
+                }, 20);
+            });
+        }
+
+        // Advanced stats counter
+        function animateAdvancedStats() {
+            const statValues = document.querySelectorAll('.stat-value');
+            statValues.forEach(stat => {
+                const target = parseInt(stat.textContent.replace(/[^0-9]/g, ''));
+                const suffix = stat.textContent.replace(/[0-9]/g, '');
+                let current = 0;
+                const increment = target / 80;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        stat.textContent = target + suffix;
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = Math.floor(current) + suffix;
+                    }
+                }, 25);
+            });
+        }
+
+        // Trigger animations when sections are visible
+        const statsSection = document.querySelector('.stats');
+        const advancedStatsSection = document.querySelector('.advanced-stats');
+        
+        if (statsSection) {
+            const statsObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            statsObserver.observe(statsSection);
+        }
+        
+        if (advancedStatsSection) {
+            const advancedStatsObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateAdvancedStats();
+                        advancedStatsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            advancedStatsObserver.observe(advancedStatsSection);
+        }
+        
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const heroAnimation = document.querySelector('.hero-animation');
+            if (heroAnimation) {
+                heroAnimation.style.transform = `translateY(-50%) translateX(${scrolled * 0.1}px)`;
+            }
+        });
+        
+        // Advanced Loading Animation
+        window.addEventListener('load', function() {
+            const loader = document.createElement('div');
+            loader.innerHTML = `
+                <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#667eea,#764ba2);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;color:white;">
+                    <div style="width:60px;height:60px;border:4px solid rgba(255,255,255,0.3);border-top:4px solid white;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:20px;"></div>
+                    <h3>Gulzar Trust Hospital</h3>
+                    <p>Loading Healthcare Excellence...</p>
+                </div>
+                <style>@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}</style>
+            `;
+            document.body.appendChild(loader);
+            
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => loader.remove(), 500);
+            }, 2000);
+        });
+        
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+        
+        // Initialize dark mode
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        
+        // Add dark mode styles
+        const darkModeStyles = `
+            .dark-mode { background: #1a1a1a; color: #fff; }
+            .dark-mode .navbar { background: rgba(26,26,26,0.95); }
+            .dark-mode .nav-link { color: #fff !important; }
+            .dark-mode .about, .dark-mode .features, .dark-mode .team, .dark-mode .timeline { background: #2d2d2d; }
+            .dark-mode .service-card, .dark-mode .team-card, .dark-mode .feature-card { background: #3d3d3d; color: #fff; }
+            .dark-mode .testimonial-card { background: #3d3d3d; }
+        `;
+        
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = darkModeStyles;
+        document.head.appendChild(styleSheet);
+        
+        // Scroll Progress Bar
+        const progressBar = document.createElement('div');
+        progressBar.style.cssText = 'position:fixed;top:0;left:0;width:0%;height:4px;background:linear-gradient(90deg,#667eea,#764ba2);z-index:9999;transition:width 0.3s ease;';
+        document.body.appendChild(progressBar);
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            progressBar.style.width = scrolled + '%';
+        });
+        
+        // Enhanced Search Functionality
+        function addSearchFeature() {
+            const searchHTML = `
+                <div id="searchOverlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9998;display:none;align-items:center;justify-content:center;">
+                    <div style="background:white;padding:40px;border-radius:15px;width:90%;max-width:600px;">
+                        <h3>Search Hospital Services</h3>
+                        <input type="text" id="searchInput" placeholder="Search doctors, services, departments..." style="width:100%;padding:15px;border:2px solid #667eea;border-radius:10px;margin:20px 0;font-size:16px;">
+                        <div id="searchResults"></div>
+                        <button onclick="closeSearch()" style="background:#667eea;color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;">Close</button>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', searchHTML);
+            
+            // Add search trigger
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'k') {
+                    e.preventDefault();
+                    document.getElementById('searchOverlay').style.display = 'flex';
+                    document.getElementById('searchInput').focus();
+                }
+            });
+        }
+        
+        function closeSearch() {
+            document.getElementById('searchOverlay').style.display = 'none';
+        }
+        
+        addSearchFeature();
+        
+        // Health Tips Rotation - REMOVED
+        
+        // Notification System
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <span><i class="fas fa-info-circle me-2"></i>${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background:none;border:none;color:white;font-size:18px;cursor:pointer;">&times;</button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+        
+        // Welcome notification
+        setTimeout(() => {
+            showNotification('Welcome to Gulzar Trust Hospital! 🏥');
+        }, 3000);
+        
+        // Interactive Elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click effects to buttons
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255,255,255,0.4);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+            
+            // Add ripple animation
+            const rippleStyle = document.createElement('style');
+            rippleStyle.textContent = `
+                @keyframes ripple {
+                    to { transform: scale(4); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(rippleStyle);
+        });
+        
+        // Performance Monitoring
+        window.addEventListener('load', () => {
+            const loadTime = performance.now();
+            console.log(`Page loaded in ${loadTime.toFixed(2)}ms`);
+        });
+    </script>
+</body>
+</html>

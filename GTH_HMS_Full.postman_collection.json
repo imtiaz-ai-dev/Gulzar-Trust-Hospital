@@ -1,0 +1,143 @@
+{
+  "info": {
+    "name": "Gulzar Trust Hospital HMS Full",
+    "_postman_id": "gth-hms-full",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [{"key":"Content-Type","value":"application/json"}],
+            "body":{"mode":"raw","raw":"{\n  \"name\":\"Admin User\",\n  \"email\":\"admin@gth.com\",\n  \"password\":\"123456\",\n  \"role\":\"admin\"\n}"},
+            "url":{"raw":"http://127.0.0.1:5000/api/auth/register"}
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header":[{"key":"Content-Type","value":"application/json"}],
+            "body":{"mode":"raw","raw":"{\n  \"email\":\"admin@gth.com\",\n  \"password\":\"123456\"\n}"},
+            "url":{"raw":"http://127.0.0.1:5000/api/auth/login"}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Patients",
+      "item":[
+        {"name":"Create Patient","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"mrn\":\"MRN001\",\n  \"name\":\"John Doe\",\n  \"gender\":\"male\",\n  \"age\":30,\n  \"phone\":\"03001234567\",\n  \"address\":\"Street 1\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/patients"}}},
+        {"name":"Get All Patients","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/patients"}}},
+        {"name":"Get Single Patient","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/patients/1"}}},
+        {"name":"Update Patient","request":{"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"phone\":\"03007654321\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/patients/1"}}},
+        {"name":"Delete Patient","request":{"method":"DELETE","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/patients/1"}}}
+      ]
+    },
+    {
+      "name":"Doctors",
+      "item":[
+        {"name":"Create Doctor","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"user_id\":1,\n  \"department_id\":1,\n  \"specialization\":\"Cardiology\",\n  \"room_no\":\"101\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/doctors"}}},
+        {"name":"Get All Doctors","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/doctors"}}},
+        {"name":"Get Single Doctor","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/doctors/1"}}},
+        {"name":"Update Doctor","request":{"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"room_no\":\"102\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/doctors/1"}}},
+        {"name":"Delete Doctor","request":{"method":"DELETE","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/doctors/1"}}}
+      ]
+    },
+    {
+      "name":"Departments",
+      "item":[
+        {"name":"Create Department","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\":\"Cardiology\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/departments"}}},
+        {"name":"Get All Departments","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/departments"}}}
+      ]
+    },
+    {
+      "name":"Visits",
+      "item":[
+        {"name":"Create Visit","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"patient_id\":1,\n  \"doctor_id\":1,\n  \"visit_type\":\"OPD\",\n  \"visit_date\":\"2025-12-25\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/visits"}}},
+        {"name":"Get All Visits","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/visits"}}}
+      ]
+    },
+    {
+      "name":"Admissions",
+      "item":[
+        {"name":"Create Admission","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"patient_id\":1,\n  \"doctor_id\":1,\n  \"ward_id\":1,\n  \"bed_id\":1,\n  \"admission_date\":\"2025-12-25\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/admissions"}}},
+        {"name":"Get All Admissions","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/admissions"}}}
+      ]
+    },
+    {
+      "name":"Wards",
+      "item":[
+        {"name":"Create Ward","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\":\"General\",\n  \"floor\":1\n}"},"url":{"raw":"http://127.0.0.1:5000/api/wards"}}},
+        {"name":"Get All Wards","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/wards"}}}
+      ]
+    },
+    {
+      "name":"Beds",
+      "item":[
+        {"name":"Create Bed","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"ward_id\":1,\n  \"bed_no\":\"B01\",\n  \"status\":\"available\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/beds"}}},
+        {"name":"Get All Beds","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/beds"}}}
+      ]
+    },
+    {
+      "name":"Medicines",
+      "item":[
+        {"name":"Create Medicine","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\":\"Paracetamol\",\n  \"description\":\"Painkiller\",\n  \"stock\":100,\n  \"price\":50\n}"},"url":{"raw":"http://127.0.0.1:5000/api/medicines"}}},
+        {"name":"Get All Medicines","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/medicines"}}}
+      ]
+    },
+    {
+      "name":"Prescriptions",
+      "item":[
+        {"name":"Create Prescription","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"visit_id\":1,\n  \"medicine_id\":1,\n  \"dose\":\"1 tab\",\n  \"frequency\":\"3 times a day\",\n  \"duration\":\"5 days\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/prescriptions"}}},
+        {"name":"Get All Prescriptions","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/prescriptions"}}}
+      ]
+    },
+    {
+      "name":"Bills",
+      "item":[
+        {"name":"Create Bill","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"admission_id\":1,\n  \"total_amount\":5000,\n  \"status\":\"unpaid\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/bills"}}},
+        {"name":"Get All Bills","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/bills"}}}
+      ]
+    },
+    {
+      "name":"Payments",
+      "item":[
+        {"name":"Create Payment","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"bill_id\":1,\n  \"amount\":5000,\n  \"payment_date\":\"2025-12-25\",\n  \"payment_method\":\"cash\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/payments"}}},
+        {"name":"Get All Payments","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/payments"}}}
+      ]
+    },
+    {
+      "name":"Lab Orders",
+      "item":[
+        {"name":"Create Lab Order","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"visit_id\":1,\n  \"test_name\":\"Blood Test\",\n  \"order_date\":\"2025-12-25\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/lab_orders"}}},
+        {"name":"Get All Lab Orders","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/lab_orders"}}}
+      ]
+    },
+    {
+      "name":"Lab Reports",
+      "item":[
+        {"name":"Create Lab Report","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"lab_order_id\":1,\n  \"report_details\":\"Normal\",\n  \"report_date\":\"2025-12-25\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/lab_reports"}}},
+        {"name":"Get All Lab Reports","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/lab_reports"}}}
+      ]
+    },
+    {
+      "name":"Nursing Notes",
+      "item":[
+        {"name":"Create Nursing Note","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"admission_id\":1,\n  \"note\":\"Patient is stable\",\n  \"note_date\":\"2025-12-25\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/nursing_notes"}}},
+        {"name":"Get All Nursing Notes","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/nursing_notes"}}}
+      ]
+    },
+    {
+      "name":"Vitals",
+      "item":[
+        {"name":"Create Vital","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access_token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"admission_id\":1,\n  \"temperature\":37.5,\n  \"bp\":\"120/80\",\n  \"pulse\":80,\n  \"respiration\":18,\n  \"vital_date\":\"2025-12-25\"\n}"},"url":{"raw":"http://127.0.0.1:5000/api/vitals"}}},
+        {"name":"Get All Vitals","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access_token}}"}],"url":{"raw":"http://127.0.0.1:5000/api/vitals"}}}
+      ]
+    }
+  ]
+}
