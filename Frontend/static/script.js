@@ -58,48 +58,26 @@ async function apiRequest(endpoint, options = {}) {
 }
 
 function checkAuth() {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
+    const userData = localStorage.getItem('currentUser');
+    if (userData) {
         try {
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            const now = Date.now() / 1000;
-            if (payload.exp > now) {
-                // Valid token
-                accessToken = token;
-                currentUser = {
-                    id: payload.sub,
-                    role: payload.role,
-                    department: payload.department,
-                    name: 'User',
-                    permissions: []
-                };
-                if (currentUser.role === 'admin') {
-                    currentUser.permissions = ['all'];
-                } else {
-                    currentUser.permissions = ['patients', 'visits', 'appointments'];
-                }
-                // Show dashboard
-                document.getElementById('dashboard').style.display = 'block';
-                document.getElementById('userRole').textContent = currentUser.role.toUpperCase();
-                if (currentUser.role === 'admin') {
-                    document.querySelectorAll('.admin-only').forEach(element => {
-                        element.style.display = 'block';
-                    });
-                }
-                hideRestrictedSections(currentUser);
-                // Load data
-                loadDataFromAPI().then(() => {
-                    showSection('overview');
-                    updateDashboardStats();
+            currentUser = JSON.parse(userData);
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('userRole').textContent = currentUser.role.toUpperCase();
+            document.getElementById('userName').textContent = currentUser.name;
+            
+            if (currentUser.role === 'admin') {
+                document.querySelectorAll('.admin-only').forEach(element => {
+                    element.style.display = 'block';
                 });
-                return true;
-            } else {
-                // Expired
-                localStorage.removeItem('accessToken');
             }
+            
+            hideRestrictedSections(currentUser);
+            showSection('overview');
+            updateDashboardStats();
+            return true;
         } catch (e) {
-            // Invalid token
-            localStorage.removeItem('accessToken');
+            localStorage.removeItem('currentUser');
         }
     }
     return false;
@@ -156,19 +134,16 @@ async function loadDataFromAPI() {
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
+    // Load sample data first
+    loadSampleData();
+    loadNewSampleData();
+    
     if (!checkAuth()) {
-        // Show login modal on page load
         const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
         loginModal.show();
     }
     
-    // Initialize navigation
     initializeNavigation();
-    
-    // Load initial data
-    loadSampleData();
-    
-    // Setup login form
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
 });
 
@@ -178,59 +153,43 @@ async function handleLogin(e) {
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
 
-    try {
-        const response = await apiRequest('/auth/login', {
-            method: 'POST',
-            body: JSON.stringify({ email, password })
-        });
+    // Simple local authentication
+    const validUsers = {
+        'admin@hospital.com': { password: 'admin123', role: 'admin', name: 'Admin User' },
+        'doctor@hospital.com': { password: 'doctor123', role: 'doctor', name: 'Dr. Ahmed' },
+        'nurse@hospital.com': { password: 'nurse123', role: 'nurse', name: 'Nurse Sarah' }
+    };
 
-        // Store the token
-        accessToken = response.access_token;
-        localStorage.setItem('accessToken', accessToken);
-
-        // Decode JWT to get user info (simple decode, not secure)
-        const payload = JSON.parse(atob(accessToken.split('.')[1]));
+    const user = validUsers[email];
+    if (user && user.password === password) {
         currentUser = {
-            id: payload.sub,
-            role: payload.role,
-            department: payload.department,
-            name: 'User', // Will be updated when loading data
-            permissions: [] // Will be set based on role
+            email: email,
+            role: user.role,
+            name: user.name,
+            permissions: user.role === 'admin' ? ['all'] : ['patients', 'visits', 'appointments']
         };
 
-        // Set permissions based on role
-        if (currentUser.role === 'admin') {
-            currentUser.permissions = ['all'];
-        } else {
-            // Set basic permissions for other roles
-            currentUser.permissions = ['patients', 'visits', 'appointments'];
-        }
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
         const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
         loginModal.hide();
         document.getElementById('dashboard').style.display = 'block';
 
-        // Set user role and show appropriate elements
         document.getElementById('userRole').textContent = currentUser.role.toUpperCase();
+        document.getElementById('userName').textContent = currentUser.name;
 
-        // Show admin panel only for admin users
         if (currentUser.role === 'admin') {
             document.querySelectorAll('.admin-only').forEach(element => {
                 element.style.display = 'block';
             });
         }
 
-        // Hide sections based on user permissions
         hideRestrictedSections(currentUser);
-
-        // Load data from API
-        await loadDataFromAPI();
-
         showSection('overview');
         updateDashboardStats();
 
-    } catch (error) {
-        alert('Login failed: ' + error.message);
+    } else {
+        alert('Invalid email or password!');
     }
 }
 
@@ -2451,12 +2410,12 @@ function updateBedDropdowns() {
 // Logout function
 function logout() {
     if (confirm('Are you sure you want to logout?')) {
-        currentUser = null; // Clear current user
+        currentUser = null;
+        localStorage.removeItem('currentUser');
         document.getElementById('dashboard').style.display = 'none';
         document.getElementById('loginEmail').value = '';
         document.getElementById('loginPassword').value = '';
         
-        // Hide admin elements
         document.querySelectorAll('.admin-only').forEach(element => {
             element.style.display = 'none';
         });
@@ -2468,93 +2427,74 @@ function logout() {
 
 // Load sample data
 function loadSampleData() {
-    if (departments.length === 0) {
-        departments = [
-            { name: 'Cardiology', description: 'Heart and cardiovascular diseases', head: 'Dr. Smith' },
-            { name: 'Neurology', description: 'Brain and nervous system disorders', head: 'Dr. Johnson' },
-            { name: 'Orthopedics', description: 'Bone and joint treatments', head: 'Dr. Brown' }
-        ];
-        localStorage.setItem('departments', JSON.stringify(departments));
-    }
+    // Load from localStorage or create sample data
+    patients = JSON.parse(localStorage.getItem('patients')) || [
+        { name: 'John Doe', gender: 'Male', age: 45, phone: '123-456-7890', address: '123 Main St', createdAt: new Date().toISOString() },
+        { name: 'Jane Smith', gender: 'Female', age: 32, phone: '098-765-4321', address: '456 Oak Ave', createdAt: new Date().toISOString() }
+    ];
     
-    if (patients.length === 0) {
-        patients = [
-            { name: 'John Doe', gender: 'Male', age: 45, phone: '123-456-7890', address: '123 Main St' },
-            { name: 'Jane Smith', gender: 'Female', age: 32, phone: '098-765-4321', address: '456 Oak Ave' }
-        ];
-        localStorage.setItem('patients', JSON.stringify(patients));
-    }
+    departments = JSON.parse(localStorage.getItem('departments')) || [
+        { name: 'Cardiology', description: 'Heart and cardiovascular diseases', head: 'Dr. Smith', createdAt: new Date().toISOString() },
+        { name: 'Neurology', description: 'Brain and nervous system disorders', head: 'Dr. Johnson', createdAt: new Date().toISOString() },
+        { name: 'Orthopedics', description: 'Bone and joint treatments', head: 'Dr. Brown', createdAt: new Date().toISOString() }
+    ];
     
-    if (doctors.length === 0) {
-        doctors = [
-            { name: 'Dr. Smith', specialization: 'Cardiologist', department: 'Cardiology', roomNo: '101' },
-            { name: 'Dr. Johnson', specialization: 'Neurologist', department: 'Neurology', roomNo: '201' }
-        ];
-        localStorage.setItem('doctors', JSON.stringify(doctors));
-    }
+    doctors = JSON.parse(localStorage.getItem('doctors')) || [
+        { name: 'Dr. Smith', specialization: 'Cardiologist', department: 'Cardiology', roomNo: '101', createdAt: new Date().toISOString() },
+        { name: 'Dr. Johnson', specialization: 'Neurologist', department: 'Neurology', roomNo: '201', createdAt: new Date().toISOString() }
+    ];
     
-    if (wards.length === 0) {
-        wards = [
-            { name: 'General Ward A', type: 'General', totalBeds: 20 },
-            { name: 'ICU', type: 'Intensive Care', totalBeds: 10 }
-        ];
-        localStorage.setItem('wards', JSON.stringify(wards));
-    }
+    wards = JSON.parse(localStorage.getItem('wards')) || [
+        { name: 'General Ward A', type: 'General', totalBeds: 20, createdAt: new Date().toISOString() },
+        { name: 'ICU', type: 'Intensive Care', totalBeds: 10, createdAt: new Date().toISOString() }
+    ];
     
-    if (beds.length === 0) {
-        beds = [
-            { number: 'A001', ward: 'General Ward A', type: 'Standard', status: 'Available', patient: null },
-            { number: 'A002', ward: 'General Ward A', type: 'Standard', status: 'Occupied', patient: 'John Doe' },
-            { number: 'ICU001', ward: 'ICU', type: 'ICU', status: 'Available', patient: null }
-        ];
-        localStorage.setItem('beds', JSON.stringify(beds));
-    }
+    beds = JSON.parse(localStorage.getItem('beds')) || [
+        { number: 'A001', ward: 'General Ward A', type: 'Standard', status: 'Available', patient: null, createdAt: new Date().toISOString() },
+        { number: 'A002', ward: 'General Ward A', type: 'Standard', status: 'Occupied', patient: 'John Doe', createdAt: new Date().toISOString() },
+        { number: 'ICU001', ward: 'ICU', type: 'ICU', status: 'Available', patient: null, createdAt: new Date().toISOString() }
+    ];
     
-    if (visits.length === 0) {
-        visits = [
-            { patient: 'John Doe', doctor: 'Dr. Smith', date: new Date().toISOString(), time: '10:00 AM', status: 'Scheduled' },
-            { patient: 'Jane Smith', doctor: 'Dr. Johnson', date: new Date().toISOString(), time: '2:00 PM', status: 'Completed' }
-        ];
-        localStorage.setItem('visits', JSON.stringify(visits));
-    }
+    visits = JSON.parse(localStorage.getItem('visits')) || [
+        { patient: 'John Doe', doctor: 'Dr. Smith', date: new Date().toISOString(), time: '10:00', status: 'Scheduled', createdAt: new Date().toISOString() },
+        { patient: 'Jane Smith', doctor: 'Dr. Johnson', date: new Date().toISOString(), time: '14:00', status: 'Completed', createdAt: new Date().toISOString() }
+    ];
     
-    if (admissions.length === 0) {
-        admissions = [
-            { patient: 'John Doe', ward: 'General Ward A', bed: 'A002', admissionDate: new Date().toISOString(), status: 'Active' }
-        ];
-        localStorage.setItem('admissions', JSON.stringify(admissions));
-    }
+    admissions = JSON.parse(localStorage.getItem('admissions')) || [
+        { patient: 'John Doe', ward: 'General Ward A', bed: 'A002', admissionDate: new Date().toISOString(), status: 'Active', createdAt: new Date().toISOString() }
+    ];
     
-    if (appointments.length === 0) {
-        appointments = [
-            { patient: 'John Doe', doctor: 'Dr. Smith', date: new Date().toISOString(), time: '10:00', type: 'Consultation', status: 'Scheduled' },
-            { patient: 'Jane Smith', doctor: 'Dr. Johnson', date: new Date().toISOString(), time: '14:00', type: 'Follow-up', status: 'Scheduled' }
-        ];
-        localStorage.setItem('appointments', JSON.stringify(appointments));
-    }
+    appointments = JSON.parse(localStorage.getItem('appointments')) || [
+        { patient: 'John Doe', doctor: 'Dr. Smith', date: new Date().toISOString(), time: '10:00', type: 'Consultation', status: 'Scheduled', createdAt: new Date().toISOString() },
+        { patient: 'Jane Smith', doctor: 'Dr. Johnson', date: new Date().toISOString(), time: '14:00', type: 'Follow-up', status: 'Scheduled', createdAt: new Date().toISOString() }
+    ];
     
-    if (bills.length === 0) {
-        bills = [
-            { patient: 'John Doe', services: [{name: 'Consultation', amount: 100}, {name: 'X-Ray', amount: 50}], totalAmount: 150, date: new Date().toISOString(), status: 'Pending' }
-        ];
-        localStorage.setItem('bills', JSON.stringify(bills));
-    }
+    bills = JSON.parse(localStorage.getItem('bills')) || [
+        { patient: 'John Doe', services: [{name: 'Consultation', amount: 100}, {name: 'X-Ray', amount: 50}], totalAmount: 150, date: new Date().toISOString(), status: 'Pending', createdAt: new Date().toISOString() }
+    ];
     
-    if (medicines.length === 0) {
-        medicines = [
-            { name: 'Paracetamol', category: 'Tablet', stock: 100, price: 5.00, expiry: '2025-12-31' },
-            { name: 'Amoxicillin', category: 'Capsule', stock: 50, price: 15.00, expiry: '2025-06-30' }
-        ];
-        localStorage.setItem('medicines', JSON.stringify(medicines));
-    }
+    medicines = JSON.parse(localStorage.getItem('medicines')) || [
+        { name: 'Paracetamol', category: 'Tablet', stock: 100, price: 5.00, expiry: '2025-12-31', createdAt: new Date().toISOString() },
+        { name: 'Amoxicillin', category: 'Capsule', stock: 50, price: 15.00, expiry: '2025-06-30', createdAt: new Date().toISOString() }
+    ];
     
-    if (labTests.length === 0) {
-        labTests = [
-            { patient: 'John Doe', testType: 'Blood Test', testDate: new Date().toISOString(), status: 'Pending', notes: 'Routine checkup' },
-            { patient: 'Jane Smith', testType: 'X-Ray', testDate: new Date().toISOString(), status: 'Completed', notes: 'Chest X-Ray' }
-        ];
-        localStorage.setItem('labTests', JSON.stringify(labTests));
-    }
+    labTests = JSON.parse(localStorage.getItem('labTests')) || [
+        { patient: 'John Doe', testType: 'Blood Test', testDate: new Date().toISOString(), status: 'Pending', notes: 'Routine checkup', createdAt: new Date().toISOString() },
+        { patient: 'Jane Smith', testType: 'X-Ray', testDate: new Date().toISOString(), status: 'Completed', notes: 'Chest X-Ray', createdAt: new Date().toISOString() }
+    ];
+    
+    // Save to localStorage
+    localStorage.setItem('patients', JSON.stringify(patients));
+    localStorage.setItem('departments', JSON.stringify(departments));
+    localStorage.setItem('doctors', JSON.stringify(doctors));
+    localStorage.setItem('wards', JSON.stringify(wards));
+    localStorage.setItem('beds', JSON.stringify(beds));
+    localStorage.setItem('visits', JSON.stringify(visits));
+    localStorage.setItem('admissions', JSON.stringify(admissions));
+    localStorage.setItem('appointments', JSON.stringify(appointments));
+    localStorage.setItem('bills', JSON.stringify(bills));
+    localStorage.setItem('medicines', JSON.stringify(medicines));
+    localStorage.setItem('labTests', JSON.stringify(labTests));
 }
 
 // Event listeners for form calculations
@@ -3116,88 +3056,64 @@ updateDashboardStats = function() {
 
 // Load sample data for new features
 function loadNewSampleData() {
-    if (inventory.length === 0) {
-        inventory = [
-            { name: 'Surgical Gloves', category: 'Consumables', quantity: 50, minStock: 100 },
-            { name: 'Stethoscope', category: 'Medical Equipment', quantity: 15, minStock: 5 },
-            { name: 'Syringes', category: 'Consumables', quantity: 200, minStock: 150 }
-        ];
-        localStorage.setItem('inventory', JSON.stringify(inventory));
-    }
+    inventory = JSON.parse(localStorage.getItem('inventory')) || [
+        { name: 'Surgical Gloves', category: 'Consumables', quantity: 50, minStock: 100, createdAt: new Date().toISOString() },
+        { name: 'Stethoscope', category: 'Medical Equipment', quantity: 15, minStock: 5, createdAt: new Date().toISOString() },
+        { name: 'Syringes', category: 'Consumables', quantity: 200, minStock: 150, createdAt: new Date().toISOString() }
+    ];
     
-    if (staff.length === 0) {
-        staff = [
-            { name: 'Sarah Johnson', role: 'Nurse', department: 'Cardiology', shift: 'Morning', status: 'Active' },
-            { name: 'Mike Wilson', role: 'Technician', department: 'Laboratory', shift: 'Evening', status: 'Active' }
-        ];
-        localStorage.setItem('staff', JSON.stringify(staff));
-    }
+    staff = JSON.parse(localStorage.getItem('staff')) || [
+        { name: 'Sarah Johnson', role: 'Nurse', department: 'Cardiology', shift: 'Morning', status: 'Active', createdAt: new Date().toISOString() },
+        { name: 'Mike Wilson', role: 'Technician', department: 'Laboratory', shift: 'Evening', status: 'Active', createdAt: new Date().toISOString() }
+    ];
     
-    if (emergencyCases.length === 0) {
-        emergencyCases = [
-            { patient: 'John Doe', priority: 'High', condition: 'Chest pain', doctor: 'Dr. Smith', status: 'Active' }
-        ];
-        localStorage.setItem('emergencyCases', JSON.stringify(emergencyCases));
-    }
+    emergencyCases = JSON.parse(localStorage.getItem('emergencyCases')) || [
+        { patient: 'John Doe', priority: 'High', condition: 'Chest pain', doctor: 'Dr. Smith', status: 'Active', createdAt: new Date().toISOString() }
+    ];
     
-    if (notifications.length === 0) {
-        notifications = [
-            { message: 'Low stock alert: Surgical Gloves below minimum level', type: 'inventory', read: false, createdAt: new Date().toISOString() },
-            { message: 'New emergency case registered', type: 'emergency', read: false, createdAt: new Date().toISOString() }
-        ];
-        localStorage.setItem('notifications', JSON.stringify(notifications));
-    }
+    notifications = JSON.parse(localStorage.getItem('notifications')) || [
+        { message: 'Low stock alert: Surgical Gloves below minimum level', type: 'inventory', read: false, createdAt: new Date().toISOString() },
+        { message: 'New emergency case registered', type: 'emergency', read: false, createdAt: new Date().toISOString() }
+    ];
     
-    if (users.length === 0) {
-        users = [
-            { 
-                name: 'Admin User', 
-                email: 'admin@hospital.com', 
-                password: 'admin123', 
-                role: 'admin', 
-                department: 'Administration', 
-                status: 'Active', 
-                permissions: ['all'],
-                createdAt: new Date().toISOString()
-            },
-            { 
-                name: 'Dr. Ahmed Ali', 
-                email: 'ahmed@hospital.com', 
-                password: 'doctor123', 
-                role: 'doctor', 
-                department: 'Cardiology', 
-                status: 'Active', 
-                permissions: ['patients', 'doctors', 'departments', 'visits', 'admissions', 'wards', 'beds', 'appointments', 'billing', 'pharmacy', 'lab', 'reports', 'inventory', 'staff', 'emergency'],
-                createdAt: new Date().toISOString()
-            },
-            { 
-                name: 'Nurse Sarah', 
-                email: 'sarah@hospital.com', 
-                password: 'nurse123', 
-                role: 'nurse', 
-                department: 'General', 
-                status: 'Active', 
-                permissions: ['patients', 'visits', 'admissions', 'wards', 'beds', 'appointments', 'pharmacy', 'lab', 'inventory', 'emergency'],
-                createdAt: new Date().toISOString()
-            },
-            { 
-                name: 'Receptionist Ali', 
-                email: 'ali@hospital.com', 
-                password: 'ali123', 
-                role: 'receptionist', 
-                department: 'Reception', 
-                status: 'Active', 
-                permissions: ['patients', 'appointments', 'billing', 'visits'],
-                createdAt: new Date().toISOString()
-            }
-        ];
-        localStorage.setItem('users', JSON.stringify(users));
-    }
+    users = JSON.parse(localStorage.getItem('users')) || [
+        { 
+            name: 'Admin User', 
+            email: 'admin@hospital.com', 
+            password: 'admin123', 
+            role: 'admin', 
+            department: 'Administration', 
+            status: 'Active', 
+            permissions: ['all'],
+            createdAt: new Date().toISOString()
+        },
+        { 
+            name: 'Dr. Ahmed Ali', 
+            email: 'doctor@hospital.com', 
+            password: 'doctor123', 
+            role: 'doctor', 
+            department: 'Cardiology', 
+            status: 'Active', 
+            permissions: ['patients', 'doctors', 'departments', 'visits', 'admissions', 'wards', 'beds', 'appointments', 'billing', 'pharmacy', 'lab', 'reports', 'inventory', 'staff', 'emergency'],
+            createdAt: new Date().toISOString()
+        },
+        { 
+            name: 'Nurse Sarah', 
+            email: 'nurse@hospital.com', 
+            password: 'nurse123', 
+            role: 'nurse', 
+            department: 'General', 
+            status: 'Active', 
+            permissions: ['patients', 'visits', 'admissions', 'wards', 'beds', 'appointments', 'pharmacy', 'lab', 'inventory', 'emergency'],
+            createdAt: new Date().toISOString()
+        }
+    ];
+    
+    // Save to localStorage
+    localStorage.setItem('inventory', JSON.stringify(inventory));
+    localStorage.setItem('staff', JSON.stringify(staff));
+    localStorage.setItem('emergencyCases', JSON.stringify(emergencyCases));
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+    localStorage.setItem('users', JSON.stringify(users));
 }
 
-// Initialize new features on page load
-document.addEventListener('DOMContentLoaded', function() {
-    // Clear old data for fresh start
-    localStorage.clear();
-    loadNewSampleData();
-});
